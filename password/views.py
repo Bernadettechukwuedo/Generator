@@ -2,8 +2,15 @@ from rest_framework.views import APIView
 from .serializer import PasswordSerializer
 import random
 from rest_framework.response import Response
+from django.http import JsonResponse
+from django.views import View
 
 # Create your views here.
+
+
+class HealthCheckView(View):
+    def get(self, request, *args, **kwargs):
+        return JsonResponse({"status": "ok"}, status=200)
 
 
 class PasswordGenerator(APIView):
@@ -14,14 +21,14 @@ class PasswordGenerator(APIView):
         if serializer_class.is_valid():
             length = serializer_class.validated_data.get("password_length")
             uppercase = serializer_class.validated_data.get("uppercase")
-            number = serializer_class.validated_data.get("number")
+            numbers = serializer_class.validated_data.get("numbers")
             symbols = serializer_class.validated_data.get("symbols")
 
             chars = list("abcdefghijklmnopqrstuvwxyz")
 
             if uppercase:
                 chars.extend("ABCDEFGHIJKLMNOPQRSTUVWXYZ")
-            if number:
+            if numbers:
                 chars.extend("0123456789")
             if symbols:
                 chars.extend(" +#$%^&*()@!")
@@ -31,4 +38,5 @@ class PasswordGenerator(APIView):
             for i in range(length):
                 password_choice += random.choice(chars)
 
-            return Response(password_choice)
+            return Response({"The password generated is": password_choice})
+        return Response(serializer_class.errors, status=400)
