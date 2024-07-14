@@ -17,7 +17,7 @@ class PasswordGenerator(APIView):
     serializer_class = PasswordSerializer
 
     def post(self, request):
-        serializer_class = PasswordSerializer(data=request.data)
+        serializer_class = self.serializer_class(data=request.data)
         if serializer_class.is_valid():
             length = serializer_class.validated_data.get("password_length")
             uppercase = serializer_class.validated_data.get("uppercase")
@@ -33,10 +33,7 @@ class PasswordGenerator(APIView):
             if symbols:
                 chars.extend(" +#$%^&*()@!")
 
-            password_choice = ""
-
-            for i in range(length):
-                password_choice += random.choice(chars)
+            password_choice = "".join(random.choice(chars) for i in range(length))
 
             return Response({"The password generated is": password_choice})
         return Response(serializer_class.errors, status=400)
