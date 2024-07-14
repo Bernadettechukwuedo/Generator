@@ -57,20 +57,20 @@ LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
     "handlers": {
-        "file": {
-            "level": "DEBUG",
-            "class": "logging.FileHandler",
-            "filename": "/path/to/django/debug.log",
+        "console": {
+            "level": "DEBUG",  # Adjust level as needed
+            "class": "logging.StreamHandler",
         },
     },
     "loggers": {
         "django": {
-            "handlers": ["file"],
-            "level": "DEBUG",
+            "handlers": ["console"],
+            "level": "DEBUG",  # Adjust level as needed
             "propagate": True,
         },
     },
 }
+
 
 ROOT_URLCONF = "password_generator.urls"
 

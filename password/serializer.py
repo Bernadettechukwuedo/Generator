@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
 
-number_length = range(1, 100)
+number_length = range(5, 100)
 
 
 class PasswordSerializer(serializers.Serializer):

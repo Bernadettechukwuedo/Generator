@@ -30,7 +30,7 @@ class TestView(TestCase):
     def setUp(self):
         self.client = Client()
         # storing the urls
-        self.password_url = reverse("password:Password_Generator")
+        self.password_url = reverse("password:Password_Gen")
 
     def test_PasswordGenerator_POST(self):
         data = {
