@@ -37,3 +37,6 @@ class PasswordGenerator(APIView):
 
             return Response({"The password generated is": password_choice})
         return Response(serializer_class.errors, status=400)
+
+    def get(self, request):
+        return Response({"Generate your password😊"}, status=200)
